@@ -1,1 +1,38 @@
 <h>Hello</h>
+
+<body>
+
+	<button type="button" onclick= "playSound()">Play</button>
+	<br><br>
+	<button type="button" onclick="stopSound()">Stop</button>
+
+<script src="https://www.html5rocks.com/en/tutorials/webaudio/intro/js/buffer-loader.js"></script>
+
+<script type="text/javascript">
+	context = new (window.AudioContext || window.webkitAudioContext)();
+	source = null;
+
+	function playSound() {
+		bufferLoader = new BufferLoader(
+			context,
+			["http://freesound.org/data/previews/448/448418_2294740-lq.mp3"
+			],
+			finishedLoading
+			);
+		bufferLoader.load();
+	}
+
+	function stopSound() {
+		source.stop()
+	}
+
+	function finishedLoading(bufferList) {
+		source = context.createBufferSource();
+		source.buffer = bufferList[0];
+		source.connect(context.destination);
+		source.start(0);
+	}
+
+</script>
+
+</body>
